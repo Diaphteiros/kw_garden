@@ -15,6 +15,9 @@ or clone the repository and run
 task install
 ```
 
+> [!NOTE]
+> This project uses [task](https://taskfile.dev/) instead of `make`.
+
 ## Configuration
 
 The plugin takes a small configuration in the kubeswitcher config. It can be completely defaulted, if missing.
