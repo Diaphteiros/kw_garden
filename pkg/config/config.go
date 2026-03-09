@@ -73,7 +73,9 @@ func LoadFromBytes(data []byte) (*GardenctlConfig, error) {
 	} else {
 		debug.Debug("No kw_garden config provided, using default values")
 	}
-	cfg.Default()
+	if err := cfg.Default(); err != nil {
+		return nil, fmt.Errorf("error setting default values for kw_garden config: %w", err)
+	}
 	if err := cfg.Validate(); err != nil {
 		return nil, fmt.Errorf("error validating kw_garden config: %w", err)
 	}

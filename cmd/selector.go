@@ -25,6 +25,11 @@ import (
 	"github.com/Diaphteiros/kw_garden/pkg/state"
 )
 
+const (
+	NoneString    = "<none>"
+	UnknownString = "<unknown>"
+)
+
 // improveTargetArguments modifies the given arguments by
 // - replacing '-g', '-p', and '-s' that come after a 'target' argument with their respective long versions '--garden', '--project', and '--shoot'
 // - interactively querying the user for garden, project, and/or shoot, if the respective arguments are missing
@@ -102,7 +107,7 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 		tmpCmd.Env = append(tmpCmd.Env, os.Environ()...)
 		data, err := tmpCmd.Output()
 		if err != nil {
-			errBuffer.Flush(cmd.ErrOrStderr())
+			_ = errBuffer.Flush(cmd.ErrOrStderr())
 			libutils.Fatal(1, "error running '%s %s': %w\n", tmpCmd.Path, strings.Join(tmpCmd.Args, " "), err)
 		}
 		gctlConfig := &gardenctlConfig{}
@@ -217,12 +222,12 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 			if project.Spec.Description != nil {
 				cur.Description = *project.Spec.Description
 			} else {
-				cur.Description = "<none>"
+				cur.Description = NoneString
 			}
 			if project.Spec.Purpose != nil {
 				cur.Purpose = *project.Spec.Purpose
 			} else {
-				cur.Purpose = "<none>"
+				cur.Purpose = NoneString
 			}
 			projects = append(projects, cur)
 		}
@@ -328,7 +333,7 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 			if creator, ok := shoot.Annotations["gardener.cloud/created-by"]; ok {
 				cur.CreatedBy = creator
 			} else {
-				cur.CreatedBy = "<unknown>"
+				cur.CreatedBy = UnknownString
 			}
 			if len(shoot.Labels) > 0 {
 				labels := make([]string, 0, len(shoot.Labels))
@@ -338,12 +343,12 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 				slices.Sort(labels)
 				cur.Labels = strings.Join(labels, "")
 			} else {
-				cur.Labels = "<none>"
+				cur.Labels = NoneString
 			}
 			if shoot.Spec.Kubernetes.Version != "" {
 				cur.KubernetesVersion = shoot.Spec.Kubernetes.Version
 			} else {
-				cur.KubernetesVersion = "<unknown>"
+				cur.KubernetesVersion = UnknownString
 			}
 			shoots = append(shoots, cur)
 		}

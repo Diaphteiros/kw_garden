@@ -102,7 +102,7 @@ All arguments are passed through to gardenctl.`,
 		// run command
 		debug.Debug("starting gardenctl execution: %s %s", bin.Path, strings.Join(bin.Args, " "))
 		if err := bin.Run(); err != nil {
-			errBuffer.Flush(cmd.ErrOrStderr())
+			_ = errBuffer.Flush(cmd.ErrOrStderr())
 			libutils.Fatal(1, "error running gardenctl: %w\n", err)
 		}
 		debug.Debug("finished gardenctl execution")
@@ -129,7 +129,7 @@ All arguments are passed through to gardenctl.`,
 			debug.Debug("gardenctl state has not changed")
 			// gardenctl command was probably a read-only command
 			// print output to stdout
-			outBuffer.Flush(cmd.OutOrStdout(), "WARN The KUBECONFIG environment variable does not point to the current target of gardenctl. Run `gardenctl kubectl-env --help` on how to configure the KUBECONFIG environment variable accordingly\n", "")
+			_ = outBuffer.Flush(cmd.OutOrStdout(), "WARN The KUBECONFIG environment variable does not point to the current target of gardenctl. Run `gardenctl kubectl-env --help` on how to configure the KUBECONFIG environment variable accordingly\n", "")
 		}
 	},
 }
@@ -179,7 +179,7 @@ func getClientForGarden(cmd *cobra.Command, cfg *config.GardenctlConfig, gardenN
 	// run command
 	debug.Debug("starting intermediate gardenctl execution: %s %s", bin.Path, strings.Join(bin.Args, " "))
 	if err := bin.Run(); err != nil {
-		errBuffer.Flush(cmd.ErrOrStderr())
+		_ = errBuffer.Flush(cmd.ErrOrStderr())
 		libutils.Fatal(1, "error running gardenctl: %w\n", err)
 	}
 	debug.Debug("finished intermediate gardenctl execution")
