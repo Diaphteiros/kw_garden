@@ -1,0 +1,17 @@
+name: CI
+
+on:
+  push:
+    tags:
+      - v*
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build_validate_test:
+    uses: Diaphteiros/cli-build/.github/workflows/ci.lib.yaml@main
+    secrets: inherit
