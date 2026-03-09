@@ -1,3 +1,5 @@
+github.com/Diaphteiros/kw/pluginlib v1.0.0 h1:wjoE/4TY0RB1c830bkcLp/7KAXkl2c3wi6o8BjLtVV8=
+github.com/Diaphteiros/kw/pluginlib v1.0.0/go.mod h1:QBdJP7zSs/mSmMlLp3HHI9mGgO7E3OvvWKTBx0kVNKQ=
 github.com/Masterminds/semver/v3 v3.4.0 h1:Zog+i5UMtVoCU8oKka5P7i9q9HgrJeGzI9SA1Xbatp0=
 github.com/Masterminds/semver/v3 v3.4.0/go.mod h1:4V+yj/TJE1HU9XfppCwVMZq3I84lprf4nC11bSS5beM=
 github.com/atotto/clipboard v0.1.4 h1:EH0zSVneZPSuFR11BlR9YppQTVDbh5+16AmcJi4g1z4=
@@ -131,8 +133,6 @@ github.com/stretchr/testify v1.11.1/go.mod h1:wZwfW3scLgRK+23gO65QZefKpKQRnfz6sD
 github.com/x448/float16 v0.8.4 h1:qLwI1I70+NjRFUR3zs1JPUCgaCXSh3SW62uAKT1mSBM=
 github.com/x448/float16 v0.8.4/go.mod h1:14CWIYCyZA/cWjXOioeEpHeN/83MdbZDRQHoFcYsOfg=
 github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
-github.com/Diaphteiros/kw/pluginlib v0.5.1 h1:vW0hG9cCe1QudPbh/BHGnEg9G1XsKQsfHOej71RlKFA=
-github.com/Diaphteiros/kw/pluginlib v0.5.1/go.mod h1:+iL2+pC8zRs5X6CLd6FZfaGwJ5pnISCgoUKtWfPcMG0=
 go.uber.org/multierr v1.11.0 h1:blXXJkSxSSfBVBlC76pxqeO+LN3aDfLQo+309xJstO0=
 go.uber.org/multierr v1.11.0/go.mod h1:20+QtiLqy0Nd6FdQB9TLXag12DsQkrbs3htMFfDN80Y=
 go.uber.org/zap v1.27.1 h1:08RqriUEv8+ArZRYSTXy1LeBScaMpVSTBhCeaZYfMYc=

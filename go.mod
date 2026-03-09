@@ -1,12 +1,12 @@
 module github.com/Diaphteiros/kw_garden
 
-go 1.25.6
+go 1.25.7
 
 require (
+	github.com/Diaphteiros/kw/pluginlib v1.0.0
 	github.com/gardener/gardener/pkg/apis v0.0.0-20260220150651-d6effc0a1157
 	github.com/mandelsoft/vfs v0.4.4
 	github.com/spf13/cobra v1.10.1
-	github.com/Diaphteiros/kw/pluginlib v1.0.0
 	k8s.io/api v0.35.0
 	k8s.io/apimachinery v0.35.0
 	sigs.k8s.io/controller-runtime v0.23.1
@@ -70,9 +70,9 @@ require (
 	golang.org/x/text v0.33.0 // indirect
 	golang.org/x/time v0.12.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
-	k8s.io/apiextensions-apiserver v0.35.0
+	k8s.io/apiextensions-apiserver v0.35.0 // indirect
 	k8s.io/client-go v0.35.0
 	k8s.io/klog/v2 v2.130.1 // indirect
-	k8s.io/utils v0.0.0-20260108192941-914a6e750570
+	k8s.io/utils v0.0.0-20260108192941-914a6e750570 // indirect
 	sigs.k8s.io/json v0.0.0-20250730193827-2d320260d730 // indirect
 )
