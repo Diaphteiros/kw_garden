@@ -35,19 +35,19 @@ Example: ` + "`" + `^(https:\/\/)?dashboard\.garden\.(?P<garden>[a-zA-Z0-9-]*)\.
 		debug.Debug("Loading kubeswitcher context from environment")
 		con, err := libcontext.NewContextFromEnv()
 		if err != nil {
-			libutils.Fatal(1, "error creating kubeswitcher context from environment (this is a plugin, did you run it as standalone?): %w", err)
+			libutils.Fatal(1, "error creating kubeswitcher context from environment (this is a plugin, did you run it as standalone?): %w\n", err)
 		}
 		debug.Debug("Kubeswitcher context loaded:\n%s", con.String())
 		debug.Debug("Loading plugin configuration")
 		cfg, err := config.LoadFromBytes([]byte(con.PluginConfig))
 		if err != nil {
-			libutils.Fatal(1, "error loading plugin configuration: %w", err)
+			libutils.Fatal(1, "error loading plugin configuration: %w\n", err)
 		}
 		debug.Debug("Plugin configuration loaded:\n%s", cfg.String())
 
 		// check if any URL regexes are specified
 		if len(cfg.URLs) == 0 {
-			libutils.Fatal(1, "no URL regexes specified in plugin configuration")
+			libutils.Fatal(1, "no URL regexes specified in plugin configuration\n")
 		}
 
 		// get URL from argument or clipboard
@@ -68,22 +68,22 @@ Example: ` + "`" + `^(https:\/\/)?dashboard\.garden\.(?P<garden>[a-zA-Z0-9-]*)\.
 		for idx, urlSpec := range cfg.URLs {
 			regex, err := regexp.Compile(urlSpec.Regex)
 			if err != nil {
-				libutils.Fatal(1, "error compiling URL regex %d: %w", idx, err)
+				libutils.Fatal(1, "error compiling URL regex %d: %w\n", idx, err)
 			}
 			gardenIdx := -1
 			if urlSpec.Garden == "" {
 				gardenIdx = regex.SubexpIndex("garden")
 				if gardenIdx < 0 {
-					libutils.Fatal(1, "garden name not overwritten and no capturing group 'garden' found in URL regex %d", idx)
+					libutils.Fatal(1, "garden name not overwritten and no capturing group 'garden' found in URL regex %d\n", idx)
 				}
 			}
 			projectIdx := regex.SubexpIndex("project")
 			if projectIdx < 0 {
-				libutils.Fatal(1, "no capturing group 'project' found in URL regex %d", idx)
+				libutils.Fatal(1, "no capturing group 'project' found in URL regex %d\n", idx)
 			}
 			shootIdx := regex.SubexpIndex("shoot")
 			if shootIdx < 0 {
-				libutils.Fatal(1, "no capturing group 'shoot' found in URL regex %d", idx)
+				libutils.Fatal(1, "no capturing group 'shoot' found in URL regex %d\n", idx)
 			}
 			matches := regex.FindStringSubmatch(url)
 			if matches == nil {
@@ -98,7 +98,7 @@ Example: ` + "`" + `^(https:\/\/)?dashboard\.garden\.(?P<garden>[a-zA-Z0-9-]*)\.
 				garden = matches[gardenIdx]
 			}
 			if garden == "" {
-				libutils.Fatal(1, "garden name must not be empty")
+				libutils.Fatal(1, "garden name must not be empty\n")
 			}
 			project := matches[projectIdx]
 			shoot := matches[shootIdx]
@@ -107,11 +107,11 @@ Example: ` + "`" + `^(https:\/\/)?dashboard\.garden\.(?P<garden>[a-zA-Z0-9-]*)\.
 			cmdString := fmt.Sprintf("%s target --garden %s --project %s --shoot %s", con.CurrentPluginName, garden, project, shoot)
 			debug.Debug("Delegating to 'target' subcommand: %s", cmdString)
 			if err := vfs.WriteFile(fs.FS, con.InternalCallPath, []byte(cmdString), vfs.ModePerm); err != nil {
-				libutils.Fatal(1, "error writing to internal call path: %w", err)
+				libutils.Fatal(1, "error writing to internal call path: %w\n", err)
 			}
 		}
 		if !matched {
-			libutils.Fatal(1, "no regex found in plugin configuration that matches the URL '%s'", url)
+			libutils.Fatal(1, "no regex found in plugin configuration that matches the URL '%s'\n", url)
 		}
 	},
 }

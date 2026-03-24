@@ -112,7 +112,7 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 		}
 		gctlConfig := &gardenctlConfig{}
 		if err := json.Unmarshal(data, gctlConfig); err != nil {
-			libutils.Fatal(1, "error unmarshaling gardenctl config: %w", err)
+			libutils.Fatal(1, "error unmarshaling gardenctl config: %w\n", err)
 		}
 		gardens := []gardenSelector{}
 		for _, g := range gctlConfig.Gardens {
@@ -154,7 +154,7 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 			}).
 			Select()
 		if err != nil {
-			libutils.Fatal(1, "error selecting garden: %w", err)
+			libutils.Fatal(1, "error selecting garden: %w\n", err)
 		}
 
 		// insert selected garden into args
@@ -175,7 +175,7 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 		var err error
 		gardenClient, err = getClientForGarden(cmd, cfg, gardenName)
 		if err != nil {
-			libutils.Fatal(1, "error creating client for garden cluster: %w", err)
+			libutils.Fatal(1, "error creating client for garden cluster: %w\n", err)
 		}
 
 		debug.Debug("fetching projects from targeted garden cluster to select project interactively")
@@ -188,7 +188,7 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 		ssrr.SetName(gardenName)
 		ctx := context.Background()
 		if err := gardenClient.Create(ctx, ssrr); err != nil {
-			libutils.Fatal(1, "error creating SelfSubjectRulesReview in garden '%s': %w", gardenName, err)
+			libutils.Fatal(1, "error creating SelfSubjectRulesReview in garden '%s': %w\n", gardenName, err)
 		}
 		projectNames := sets.New[string]()
 		for _, rule := range ssrr.Status.ResourceRules {
@@ -254,7 +254,7 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 			}).
 			Select()
 		if err != nil {
-			libutils.Fatal(1, "error selecting project: %w", err)
+			libutils.Fatal(1, "error selecting project: %w\n", err)
 		}
 
 		// insert selected project into args
@@ -290,7 +290,7 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 			debug.Debug("no project name specified in arguments, extracting it from current state")
 			projectName = oldState.Project
 			if projectName == "" {
-				libutils.Fatal(1, "unable to determine project name for shoot selection: no project specified in arguments and no project found in current state")
+				libutils.Fatal(1, "unable to determine project name for shoot selection: no project specified in arguments and no project found in current state\n")
 			} else {
 				debug.Debug("identified project name '%s' from current state", projectName)
 			}
@@ -298,28 +298,28 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 		debug.Debug("fetching project to determine project namespace")
 		if gardenClient == nil {
 			if gardenName == "" {
-				libutils.Fatal(1, "unable to determine garden name for shoot selection: no garden specified in arguments and no garden found in current state")
+				libutils.Fatal(1, "unable to determine garden name for shoot selection: no garden specified in arguments and no garden found in current state\n")
 			}
 			var err error
 			gardenClient, err = getClientForGarden(cmd, cfg, gardenName)
 			if err != nil {
-				libutils.Fatal(1, "error creating client for garden cluster: %w", err)
+				libutils.Fatal(1, "error creating client for garden cluster: %w\n", err)
 			}
 		}
 		project := &gardenv1beta1.Project{}
 		project.SetName(projectName)
 		if err := gardenClient.Get(cmd.Context(), client.ObjectKeyFromObject(project), project); err != nil {
-			libutils.Fatal(1, "error fetching project '%s': %w", projectName, err)
+			libutils.Fatal(1, "error fetching project '%s': %w\n", projectName, err)
 		}
 		if project.Spec.Namespace == nil || *project.Spec.Namespace == "" {
-			libutils.Fatal(1, "project '%s' does not have a namespace specified", projectName)
+			libutils.Fatal(1, "project '%s' does not have a namespace specified\n", projectName)
 		}
 		projectNamespace := *project.Spec.Namespace
 
 		debug.Debug("fetching shoots from targeted garden cluster and project namespace to select shoot interactively")
 		shootList := &gardenv1beta1.ShootList{}
 		if err := gardenClient.List(cmd.Context(), shootList, client.InNamespace(projectNamespace)); err != nil {
-			libutils.Fatal(1, "error listing shoots in project '%s' (namespace '%s'): %w", projectName, projectNamespace, err)
+			libutils.Fatal(1, "error listing shoots in project '%s' (namespace '%s'): %w\n", projectName, projectNamespace, err)
 		}
 
 		shoots := make([]shootSelector, 0, len(shootList.Items))
@@ -369,7 +369,7 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 			}).
 			Select()
 		if err != nil {
-			libutils.Fatal(1, "error selecting shoot: %w", err)
+			libutils.Fatal(1, "error selecting shoot: %w\n", err)
 		}
 
 		// insert selected shoot into args

@@ -39,13 +39,13 @@ All arguments are passed through to gardenctl.`,
 		debug.Debug("Loading kubeswitcher context from environment")
 		con, err := libcontext.NewContextFromEnv()
 		if err != nil {
-			libutils.Fatal(1, "error creating kubeswitcher context from environment (this is a plugin, did you run it as standalone?): %w", err)
+			libutils.Fatal(1, "error creating kubeswitcher context from environment (this is a plugin, did you run it as standalone?): %w\n", err)
 		}
 		debug.Debug("Kubeswitcher context loaded:\n%s", con.String())
 		debug.Debug("Loading plugin configuration")
 		cfg, err := config.LoadFromBytes([]byte(con.PluginConfig))
 		if err != nil {
-			libutils.Fatal(1, "error loading plugin configuration: %w", err)
+			libutils.Fatal(1, "error loading plugin configuration: %w\n", err)
 		}
 		debug.Debug("Plugin configuration loaded:\n%s", cfg.String())
 
@@ -58,12 +58,12 @@ All arguments are passed through to gardenctl.`,
 		gardenctlStateDir := state.GardenctlStateDir(gardenctlSessionId)
 		ok, err := oldState.LoadFromKubeswitcher(con)
 		if err != nil {
-			libutils.Fatal(1, "error loading kubeswitcher state: %w", err)
+			libutils.Fatal(1, "error loading kubeswitcher state: %w\n", err)
 		}
 		if ok {
 			debug.Debug("Loaded plugin state from kubeswitcher, writing it to gardenctl state dir")
 			if err := oldState.StoreToGardenctl(gardenctlStateDir); err != nil {
-				libutils.Fatal(1, "error overwriting gardenctl state: %w", err)
+				libutils.Fatal(1, "error overwriting gardenctl state: %w\n", err)
 			}
 		} else {
 			debug.Debug("Unable to load plugin state from kubeswitcher (either not found or current state is from a different plugin)")
@@ -87,9 +87,10 @@ All arguments are passed through to gardenctl.`,
 		bin.Env = append(bin.Env, os.Environ()...) // add current env vars
 		debug.Debug("environment (in addition to parent process environment):\n")
 		for k, v := range env { // add custom env vars
-			debug.Debug("  %s=%s\n", k, v)
+			debug.Debug("  %s=%s", k, v)
 			bin.Env = append(bin.Env, fmt.Sprintf("%s=%s", k, v))
 		}
+		debug.Debug("") // just for the newline
 
 		errBuffer := libutils.NewWriteBuffer()
 		outBuffer := libutils.NewWriteBuffer()
@@ -110,7 +111,7 @@ All arguments are passed through to gardenctl.`,
 		// read new state from gardenctl state dir
 		newState := &state.GardenctlState{}
 		if ok, err := newState.LoadFromGardenctl(gardenctlStateDir); err != nil {
-			libutils.Fatal(1, "error loading gardenctl state: %w", err)
+			libutils.Fatal(1, "error loading gardenctl state: %w\n", err)
 		} else if !ok {
 			debug.Debug("No gardenctl state found")
 		}
@@ -119,11 +120,11 @@ All arguments are passed through to gardenctl.`,
 			debug.Debug("gardenctl state has changed")
 			// throw error if gardenctl state has changed, but does not have a kubeconfig
 			if len(newState.KubeconfigData) == 0 {
-				libutils.Fatal(1, "gardenctl state has changed, but no kubeconfig found")
+				libutils.Fatal(1, "gardenctl state has changed, but no kubeconfig found\n")
 			}
 			// write new state to kubeswitcher state
 			if err := newState.StoreToKubeswitcher(con); err != nil {
-				libutils.Fatal(1, "error writing plugin state: %w", err)
+				libutils.Fatal(1, "error writing plugin state: %w\n", err)
 			}
 		} else {
 			debug.Debug("gardenctl state has not changed")
@@ -164,9 +165,10 @@ func getClientForGarden(cmd *cobra.Command, cfg *config.GardenctlConfig, gardenN
 	bin.Env = append(bin.Env, os.Environ()...) // add current env vars
 	debug.Debug("environment (in addition to parent process environment):\n")
 	for k, v := range env { // add custom env vars
-		debug.Debug("  %s=%s\n", k, v)
+		debug.Debug("  %s=%s", k, v)
 		bin.Env = append(bin.Env, fmt.Sprintf("%s=%s", k, v))
 	}
+	debug.Debug("") // just for the newline
 
 	errBuffer := libutils.NewWriteBuffer()
 	outBuffer := libutils.NewWriteBuffer()
@@ -187,7 +189,7 @@ func getClientForGarden(cmd *cobra.Command, cfg *config.GardenctlConfig, gardenN
 	intermediateState := &state.GardenctlState{}
 	ok, err := intermediateState.LoadFromGardenctl(state.GardenctlStateDir(tmpStateName))
 	if err != nil {
-		libutils.Fatal(1, "error loading gardenctl state: %w", err)
+		libutils.Fatal(1, "error loading gardenctl state: %w\n", err)
 	}
 	if !ok {
 		debug.Debug("No gardenctl state found after targeting garden")
