@@ -3,7 +3,7 @@ module github.com/Diaphteiros/kw_garden
 go 1.25.7
 
 require (
-	github.com/Diaphteiros/kw/pluginlib v1.0.0
+	github.com/Diaphteiros/kw/pluginlib v1.1.0
 	github.com/gardener/gardener/pkg/apis v0.0.0-20260220150651-d6effc0a1157
 	github.com/mandelsoft/vfs v0.4.4
 	github.com/spf13/cobra v1.10.1
