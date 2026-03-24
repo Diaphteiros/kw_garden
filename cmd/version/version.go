@@ -56,7 +56,7 @@ var VersionCmd = &cobra.Command{
 			}
 			cmd.Print(string(data))
 		default:
-			libutils.Fatal(1, "unknown output format '%s'", string(output))
+			libutils.Fatal(1, "unknown output format '%s'\n", string(output))
 		}
 	},
 }
