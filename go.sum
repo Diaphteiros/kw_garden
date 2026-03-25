@@ -1,5 +1,5 @@
-github.com/Diaphteiros/kw/pluginlib v1.1.0 h1:CcdE02o3xWW4x2cGuHI5VQTU5Tvl8evWPfiTc5sTbNw=
-github.com/Diaphteiros/kw/pluginlib v1.1.0/go.mod h1:QBdJP7zSs/mSmMlLp3HHI9mGgO7E3OvvWKTBx0kVNKQ=
+github.com/Diaphteiros/kw/pluginlib v1.1.3-0.20260325103825-7994c47c417c h1:ulOaH69NqSlkXTOIpeaZYKsLLkFaF77bhhPjcQ/TVxc=
+github.com/Diaphteiros/kw/pluginlib v1.1.3-0.20260325103825-7994c47c417c/go.mod h1:QBdJP7zSs/mSmMlLp3HHI9mGgO7E3OvvWKTBx0kVNKQ=
 github.com/Masterminds/semver/v3 v3.4.0 h1:Zog+i5UMtVoCU8oKka5P7i9q9HgrJeGzI9SA1Xbatp0=
 github.com/Masterminds/semver/v3 v3.4.0/go.mod h1:4V+yj/TJE1HU9XfppCwVMZq3I84lprf4nC11bSS5beM=
 github.com/atotto/clipboard v0.1.4 h1:EH0zSVneZPSuFR11BlR9YppQTVDbh5+16AmcJi4g1z4=
