@@ -6,11 +6,15 @@ Technically, this just implements the kubeswitcher plugin contract and passes th
 
 ## Installation
 
-To install the KubeSwitcher plugin, simply run the following command
+### Homebrew
+
 ```shell
-go install github.com/Diaphteiros/kw_garden@latest
+brew tap diaphteiros/kubeswitcher
+brew install kw_garden
 ```
-or clone the repository and run
+
+### Manual Build
+Clone the repository (including the submodule) and run
 ```shell
 task install
 ```

@@ -1,0 +1,15 @@
+name: Homebrew Releaser
+
+on:
+  release:
+    types:
+    - published
+
+jobs:
+  homebrew:
+    uses: Diaphteiros/cli-build/.github/workflows/homebrew.lib.yaml@main
+    secrets: inherit
+    with:
+      username: Diaphteiros
+      tap: homebrew-kubeswitcher
+      secret_name: HOMEBREW_KUBESWITCHER_TOKEN
