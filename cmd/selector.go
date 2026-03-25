@@ -136,11 +136,6 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 			gardens = append(gardens, gs)
 		}
 
-		// sort by identity, but reversed so the fuzzy finder shows them ordered from top to bottom
-		slices.SortFunc(gardens, func(a, b gardenSelector) int {
-			return -strings.Compare(a.Garden, b.Garden)
-		})
-
 		// select garden
 		_, selectedGarden, err := selector.New[gardenSelector]().
 			WithPrompt("Select Garden: ").
@@ -149,6 +144,7 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 			WithPreview(func(elem gardenSelector, _, _ int) string {
 				return fmt.Sprintf("Garden: %s\n\nAPI Server: %s\nKubeconfig Path: %s", elem.Garden, elem.APIServer, elem.KubeconfigPath)
 			}).
+			WithSortByKey(selector.Invert).
 			From(gardens, func(elem gardenSelector) string {
 				return elem.Garden
 			}).
@@ -232,11 +228,6 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 			projects = append(projects, cur)
 		}
 
-		// sort projects in inverse alphabetical order so the fuzzy finder shows them from top to bottom
-		slices.SortFunc(projects, func(a, b projectSelector) int {
-			return -strings.Compare(a.Project, b.Project)
-		})
-
 		// select project
 		_, selectedProject, err = selector.New[projectSelector]().
 			WithPrompt("Select Project: ").
@@ -249,6 +240,7 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 				}
 				return fmt.Sprintf("Project: %s\n\nDescription: %s\nPurpose: %s\n\nCreated By: %s\nOwner:      %s\n\nUsers:%s", elem.Project, elem.Description, elem.Purpose, elem.CreatedBy, elem.Owner, userString)
 			}).
+			WithSortByKey(selector.Invert).
 			From(projects, func(elem projectSelector) string {
 				return elem.Project
 			}).
@@ -352,9 +344,6 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 			}
 			shoots = append(shoots, cur)
 		}
-		slices.SortFunc(shoots, func(a, b shootSelector) int {
-			return -strings.Compare(a.Name, b.Name)
-		})
 
 		// select shoot
 		_, selectedShoot, err := selector.New[shootSelector]().
@@ -364,6 +353,7 @@ func improveTargetArguments(cmd *cobra.Command, cfg *config.GardenctlConfig, old
 			WithPreview(func(elem shootSelector, _, _ int) string {
 				return fmt.Sprintf("Name: %s\nNamespace: %s\n\nCreated At: %s\nCreated By: %s\n\nKubernetes Version: %s\n\nHibernated: %t\n\nLabels:%s", elem.Name, elem.Namespace, elem.CreatedAt, elem.CreatedBy, elem.KubernetesVersion, elem.Hibernated, elem.Labels)
 			}).
+			WithSortByKey(selector.Invert).
 			From(shoots, func(elem shootSelector) string {
 				return elem.Name
 			}).
