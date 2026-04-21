@@ -7,9 +7,10 @@ on:
 
 jobs:
   homebrew:
-    uses: Diaphteiros/cli-build/.github/workflows/homebrew.lib.yaml@main
-    secrets: inherit
+    uses: openmcp-project/build/.github/workflows/homebrew.lib.yaml@main
     with:
       username: Diaphteiros
       tap: homebrew-kubeswitcher
-      secret_name: HOMEBREW_KUBESWITCHER_TOKEN
+      readme_table: true
+    secrets:
+      token: ${{ secrets.HOMEBREW_KUBESWITCHER_TOKEN }}

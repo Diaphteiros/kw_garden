@@ -13,5 +13,5 @@ permissions:
 
 jobs:
   build_validate_test:
-    uses: Diaphteiros/cli-build/.github/workflows/ci.lib.yaml@main
+    uses: openmcp-project/build/.github/workflows/ci.lib.yaml@main
     secrets: inherit
