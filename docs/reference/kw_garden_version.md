@@ -13,22 +13,21 @@ kw_garden version [flags]
 ### Examples
 
 ```
-  > kw version
+  > kw garden version
   v1.2.3
 
-  > kw version -o json
-  {"major":"v1","minor":"2","gitVersion":"v1.2.3","gitCommit":"76c01d5337fc9de6e053b4e5bafd5239c8b7a973","gitTreeState":"dirty","buildDate":"2024-04-26T11:29:39+02:00","goVersion":"go1.22.2","compiler":"gc","platform":"darwin/arm64"}
+  > kw garden version -o json
+  {"version":"v1.2.3-dev-4516e7f4dee0861b3d1a31b53d3a8aabbd084f48","gitTreeState":"dirty","gitCommit":"4516e7f4dee0861b3d1a31b53d3a8aabbd084f48","buildDate":"2026-04-21T13:14:36Z","major":1,"minor":2,"patch":3,"suffix":"dev-4516e7f4dee0861b3d1a31b53d3a8aabbd084f48"}
 
-  > kw version -o yaml
-  buildDate: "2024-04-26T11:29:39+02:00"
-  compiler: gc
-  gitCommit: 76c01d5337fc9de6e053b4e5bafd5239c8b7a973
-  gitTreeState: dirty
-  gitVersion: v1.2.3
-  goVersion: go1.22.2
-  major: v1
-  minor: "2"
-  platform: darwin/arm64
+  > kw garden version -o yaml
+	buildDate: "2026-04-21T13:14:36Z"
+	gitCommit: 4516e7f4dee0861b3d1a31b53d3a8aabbd084f48
+	gitTreeState: dirty
+	major: 1
+	minor: 2
+	patch: 3
+	suffix: dev-4516e7f4dee0861b3d1a31b53d3a8aabbd084f48
+	version: v1.2.3-dev-4516e7f4dee0861b3d1a31b53d3a8aabbd084f48
 ```
 
 ### Options

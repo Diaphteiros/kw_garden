@@ -5,10 +5,11 @@ import (
 
 	"github.com/spf13/cobra"
 
-	staticversion "github.com/Diaphteiros/kw_garden/pkg/version"
+	"sigs.k8s.io/yaml"
 
 	libutils "github.com/Diaphteiros/kw/pluginlib/pkg/utils"
-	"sigs.k8s.io/yaml"
+
+	"github.com/Diaphteiros/kw_garden/internal/version"
 )
 
 // variables for holding the flags
@@ -23,34 +24,34 @@ var VersionCmd = &cobra.Command{
 	Args:    cobra.NoArgs,
 	Short:   "Print the version",
 	Long:    `Output the version of the CLI.`,
-	Example: `  > kw version
+	Example: `  > kw garden version
   v1.2.3
 
-  > kw version -o json
-  {"major":"v1","minor":"2","gitVersion":"v1.2.3","gitCommit":"76c01d5337fc9de6e053b4e5bafd5239c8b7a973","gitTreeState":"dirty","buildDate":"2024-04-26T11:29:39+02:00","goVersion":"go1.22.2","compiler":"gc","platform":"darwin/arm64"}
+  > kw garden version -o json
+  {"version":"v1.2.3-dev-4516e7f4dee0861b3d1a31b53d3a8aabbd084f48","gitTreeState":"dirty","gitCommit":"4516e7f4dee0861b3d1a31b53d3a8aabbd084f48","buildDate":"2026-04-21T13:14:36Z","major":1,"minor":2,"patch":3,"suffix":"dev-4516e7f4dee0861b3d1a31b53d3a8aabbd084f48"}
 
-  > kw version -o yaml
-  buildDate: "2024-04-26T11:29:39+02:00"
-  compiler: gc
-  gitCommit: 76c01d5337fc9de6e053b4e5bafd5239c8b7a973
-  gitTreeState: dirty
-  gitVersion: v1.2.3
-  goVersion: go1.22.2
-  major: v1
-  minor: "2"
-  platform: darwin/arm64`,
+  > kw garden version -o yaml
+	buildDate: "2026-04-21T13:14:36Z"
+	gitCommit: 4516e7f4dee0861b3d1a31b53d3a8aabbd084f48
+	gitTreeState: dirty
+	major: 1
+	minor: 2
+	patch: 3
+	suffix: dev-4516e7f4dee0861b3d1a31b53d3a8aabbd084f48
+	version: v1.2.3-dev-4516e7f4dee0861b3d1a31b53d3a8aabbd084f48`,
 	Run: func(cmd *cobra.Command, args []string) {
+		ver := version.Get()
 		switch output {
 		case libutils.OUTPUT_TEXT:
-			cmd.Print(staticversion.Version.String())
+			cmd.Print(ver.String())
 		case libutils.OUTPUT_JSON:
-			data, err := json.Marshal(staticversion.Version)
+			data, err := json.Marshal(ver)
 			if err != nil {
 				libutils.Fatal(1, "error converting version to json: %w\n", err)
 			}
 			cmd.Println(string(data))
 		case libutils.OUTPUT_YAML:
-			data, err := yaml.Marshal(staticversion.Version)
+			data, err := yaml.Marshal(ver)
 			if err != nil {
 				libutils.Fatal(1, "error converting version to yaml: %w\n", err)
 			}

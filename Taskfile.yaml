@@ -2,7 +2,7 @@ version: 3
 
 includes:
   shared:
-    taskfile: hack/common/Taskfile_root.yaml
+    taskfile: hack/common/Taskfile_cli.yaml
     flatten: true
     vars:
       CODE_DIRS: '{{.ROOT_DIR}}/cmd/... {{.ROOT_DIR}}/pkg/...'
