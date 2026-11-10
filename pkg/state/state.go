@@ -43,7 +43,14 @@ func init() {
 }
 
 func GardenctlStateDir(sessionId string) string {
-	return filepath.Join(os.Getenv("TMPDIR"), "garden", "sessions", sessionId)
+	p := os.Getenv("TMPDIR")
+	if uid := os.Geteuid(); uid >= 0 {
+		p = filepath.Join(p, fmt.Sprintf("garden-%d", uid))
+	} else {
+		p = filepath.Join(p, "garden")
+	}
+	p = filepath.Join(p, "sessions", sessionId)
+	return p
 }
 
 type GardenctlState struct {
