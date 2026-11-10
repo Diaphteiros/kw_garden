@@ -19,5 +19,7 @@ jobs:
       tap: homebrew-kubeswitcher
       readme_table: true
       tag: ${{ inputs.tag }}
+      test: |
+        assert_match(/^v\d/, shell_output("#{bin}/kw_garden version"))
     secrets:
       token: ${{ secrets.HOMEBREW_KUBESWITCHER_TOKEN }}
